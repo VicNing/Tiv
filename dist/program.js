@@ -24,6 +24,18 @@ class Program extends node_1.ParentNode {
     get columns() {
         return this.output.columns;
     }
+    get contentOffsetX() {
+        return 0;
+    }
+    get contentOffsetY() {
+        return 0;
+    }
+    get contentWidth() {
+        return this.columns;
+    }
+    get contentHeight() {
+        return this.rows;
+    }
     data(data) {
         this.propagateEvent('data', data);
     }
@@ -34,27 +46,31 @@ class Program extends node_1.ParentNode {
     }
     render() {
         this.input.setRawMode(true);
-        this.input.resume();
         this.input.on('data', (data) => {
             this.emit('data', data);
         });
     }
     cursorTo(x, y) {
         this.output.cursorTo(x, y);
-        if (this.screen) {
-            this.screen.cursorX = x;
-            this.screen.cursorY = y;
-        }
     }
     clearLine(dir) {
         this.output.clearLine(dir);
+    }
+    clearArea(x, y, width, height) {
+        this.cursorTo(x, y);
+        for (let i = 0; i < height - 1; i++) {
+            for (let j = 0; j < width - 1; j++) {
+                this.write(' ');
+            }
+            this.cursorTo(x + 1, y);
+        }
     }
     write(data) {
         this.output.write(data);
     }
     appendChild(component) {
-        component.emit('render', this);
         this.children.push(component);
+        component.emit('render', this, this);
     }
     get screen() {
         if (this._screen) {

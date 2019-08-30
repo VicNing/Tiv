@@ -1,50 +1,67 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_1 = require("./node");
+const styling_1 = require("./styling");
 class Screen extends node_1.ParentNode {
     constructor(options = {}) {
         super();
-        this.cursorX = 0;
-        this.cursorY = 0;
+        this.options = options;
     }
     data(data) {
         this.propagateEvent('data', data);
     }
-    render(program) {
+    get contentWidth() {
+        if (this.options.style && this.options.style.border) {
+            if (this.width < 2) {
+                return 0;
+            }
+            else {
+                return this.width - 2;
+            }
+        }
+        else {
+            return this.width;
+        }
+    }
+    get contentHeight() {
+        if (this.options.style && this.options.style.border) {
+            if (this.height < 2) {
+                return 0;
+            }
+            else {
+                return this.height - 2;
+            }
+        }
+        else {
+            return this.height;
+        }
+    }
+    get contentOffsetX() {
+        if (this.options.style && this.options.style.border) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    get contentOffsetY() {
+        if (this.options.style && this.options.style.border) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    render(program, parent) {
         this.program = program;
-        this.height = program.rows;
-        this.width = program.columns;
+        this.x = 0;
+        this.y = 0;
+        this.width = parent.contentWidth;
+        this.height = parent.contentHeight;
         program.write('\u001b[?1049h'); //smcup
-        program.cursorTo(0, 0);
+        program.cursorTo(this.absX(), this.absY());
         program.output.clearScreenDown();
-        //todo border drawing
-        for (let i = 0; i < this.width; i++) {
-            if (i === 0 || i === this.width - 1) {
-                program.write('+');
-            }
-            else {
-                program.write('-');
-            }
-        }
-        program.cursorTo(0, 1);
-        for (let i = 1; i < this.height; i++) {
-            program.write('¦');
-            program.cursorTo(0, i);
-        }
-        program.cursorTo(this.width - 1, 1);
-        for (let i = 1; i < this.height; i++) {
-            program.write('¦');
-            program.cursorTo(this.width - 1, i);
-        }
-        program.cursorTo(0, program.rows);
-        for (let i = 0; i < this.width; i++) {
-            if (i === 0 || i === this.width - 1) {
-                program.write('+');
-            }
-            else {
-                program.write('-');
-            }
-        }
+        styling_1.styling(this.options.style, this, program);
     }
     destroy() {
         if (this.program) {

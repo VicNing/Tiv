@@ -33,6 +33,22 @@ export class Program extends ParentNode {
     return this.output.columns;
   }
 
+  get contentOffsetX() {
+    return 0;
+  }
+
+  get contentOffsetY() {
+    return 0;
+  }
+
+  get contentWidth() {
+    return this.columns;
+  }
+
+  get contentHeight() {
+    return this.rows;
+  }
+
   data(data: Buffer) {
     this.propagateEvent('data', data);
   }
@@ -45,7 +61,6 @@ export class Program extends ParentNode {
 
   render() {
     this.input.setRawMode(true);
-    this.input.resume();
     this.input.on('data', (data: Buffer) => {
       this.emit('data', data);
     });
@@ -53,14 +68,20 @@ export class Program extends ParentNode {
 
   cursorTo(x: number, y: number) {
     this.output.cursorTo(x, y);
-    if (this.screen) {
-      this.screen.cursorX = x;
-      this.screen.cursorY = y;
-    }
   }
 
   clearLine(dir: tty.Direction) {
     this.output.clearLine(dir);
+  }
+
+  clearArea(x: number, y: number, width: number, height: number) {
+    this.cursorTo(x, y);
+    for (let i = 0; i < height - 1; i++) {
+      for (let j = 0; j < width - 1; j++) {
+        this.write(' ');
+      }
+      this.cursorTo(x + 1, y);
+    }
   }
 
   write(data: Buffer | string) {
@@ -68,8 +89,8 @@ export class Program extends ParentNode {
   }
 
   appendChild(component: any) {
-    component.emit('render', this);
     this.children.push(component);
+    component.emit('render', this, this);
   }
 
   get screen(): Screen | null {

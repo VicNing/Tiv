@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const key_1 = require("./key");
 const node_1 = require("./node");
+const styling_1 = require("./styling");
 class Input extends node_1.Node {
     constructor(options = {}) {
         super();
@@ -10,6 +11,48 @@ class Input extends node_1.Node {
         this.y = options.y || 0;
         this.options = options;
         this.bindKey(key_1.KEYS.return);
+    }
+    get contentWidth() {
+        if (this.options.style && this.options.style.border) {
+            if (this.width < 2) {
+                return 0;
+            }
+            else {
+                return this.width - 2;
+            }
+        }
+        else {
+            return this.width;
+        }
+    }
+    get contentHeight() {
+        if (this.options.style && this.options.style.border) {
+            if (this.height < 2) {
+                return 0;
+            }
+            else {
+                return this.height - 2;
+            }
+        }
+        else {
+            return this.height;
+        }
+    }
+    get contentOffsetX() {
+        if (this.options.style && this.options.style.border) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    get contentOffsetY() {
+        if (this.options.style && this.options.style.border) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
     data(data) {
         if (this.program) {
@@ -26,22 +69,31 @@ class Input extends node_1.Node {
     reset() {
         this.inputValue = '';
         if (this.program) {
-            this.program.cursorTo(this.x, this.y);
-            this.program.clearLine(0);
+            this.program.cursorTo(this.absX() + this.contentOffsetX, this.absY() + this.contentOffsetY);
             if (this.options.prompt) {
                 this.program.write(this.options.prompt);
             }
-            if (this.options.underLine) {
-                this.program.write('\u001b[0m\u001b[4m');
-            }
+            //todo underline
+            // if (this.options.underLine) {
+            //   this.program.write('\u001b[0m\u001b[4m');
+            // }
         }
     }
-    render(program) {
+    render(program, parent) {
         this.program = program;
-        this.width = program.rows;
-        this.height = 1; //todo
-        key_1.bindKey(key_1.KEYS.return, this);
+        this.parent = parent;
+        this.width = parent.contentWidth;
+        this.height = 3; //todo
+        const parentContentX = parent.x + parent.contentOffsetX, parentContentY = parent.y + parent.contentOffsetY;
+        this.x = this.options.x ? this.options.x + parentContentX : parentContentX;
+        this.y = this.options.y ? this.options.y + parentContentX : parentContentY;
+        this.program.clearArea(this.absX(), this.absY(), this.width, this.height);
+        if (this.options.style) {
+            styling_1.styling(this.options.style, this, program);
+        }
+        this.bindKey(key_1.KEYS.return);
         this.reset();
     }
+    destroy() { }
 }
 exports.Input = Input;

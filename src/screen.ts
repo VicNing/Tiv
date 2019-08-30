@@ -1,57 +1,73 @@
 import { Program } from './program';
 import { ParentNode } from './node'
+import { styling } from './styling'
 
 export class Screen extends ParentNode {
-  cursorX: number = 0;
-  cursorY: number = 0;
-
   constructor(options = {}) {
     super();
+    this.options = options;
   }
 
   data(data: Buffer) {
     this.propagateEvent('data', data);
   }
 
-  render(program: Program) {
+  get contentWidth() {
+    if (this.options.style && this.options.style.border) {
+      if (this.width < 2) {
+        return 0;
+      } else {
+        return this.width - 2;
+      }
+    } else {
+      return this.width;
+    }
+  }
+
+  get contentHeight() {
+    if (this.options.style && this.options.style.border) {
+      if (this.height < 2) {
+        return 0;
+      } else {
+        return this.height - 2;
+      }
+    } else {
+      return this.height;
+    }
+  }
+
+  get contentOffsetX() {
+    if (this.options.style && this.options.style.border) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  get contentOffsetY() {
+    if (this.options.style && this.options.style.border) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+
+  render(program: Program, parent: ParentNode) {
     this.program = program;
 
-    this.height = program.rows;
-    this.width = program.columns;
+    this.x = 0;
+    this.y = 0;
+
+    this.width = parent.contentWidth;
+    this.height = parent.contentHeight;
 
     program.write('\u001b[?1049h');//smcup
-    program.cursorTo(0, 0);
+    program.cursorTo(this.absX(), this.absY());
     program.output.clearScreenDown();
 
-    //todo border drawing
-    for (let i = 0; i < this.width; i++) {
-      if (i === 0 || i === this.width - 1) {
-        program.write('+');
-      } else {
-        program.write('-');
-      }
-    }
+    styling(this.options.style, this, program);
 
-    program.cursorTo(0, 1);
-    for (let i = 1; i < this.height; i++) {
-      program.write('¦');
-      program.cursorTo(0, i);
-    }
-
-    program.cursorTo(this.width-1, 1);
-    for (let i = 1; i < this.height; i++) {
-      program.write('¦');
-      program.cursorTo(this.width-1, i);
-    }
-
-    program.cursorTo(0, program.rows);
-    for (let i = 0; i < this.width; i++) {
-      if (i === 0 || i === this.width - 1) {
-        program.write('+');
-      } else {
-        program.write('-');
-      }
-    }
   }
 
   destroy() {

@@ -1,15 +1,44 @@
 import { EventEmitter } from "events";
 import { Program } from './program'
 import { KEYS } from "./key";
+import { StyleOptions } from './styling'
 
-export class Node extends EventEmitter {
+export interface NodeOptions {
+  style?: StyleOptions
+};
+
+export abstract class Node extends EventEmitter {
+  /**
+   * x, y: position relative to parent node's top left content area.
+   */
   x: number = 0;
   y: number = 0;
-  width: number | undefined;
-  height: number | undefined;
+
+  /**
+   * width, height: total width/height. Similar to "box-sizing: border-box" in CSS.
+   */
+  width: number = 0;
+  height: number = 0;
+
+  /**
+   * program: Program instance. Usually Intialized at render callback.
+   */
   program: Program | undefined;
+
+  /**
+   * parent: parent node attatched to. Usually Intialized at render callback.
+   */
   parent: Node | undefined;
+
+  /**
+   * keyBindings: key binding regsitry.
+   */
   keyBindings: { [index: number]: boolean } = {};
+
+  /**
+   * options: construction options.
+   */
+  options: NodeOptions = {}
 
   constructor() {
     super();
@@ -17,6 +46,49 @@ export class Node extends EventEmitter {
     this.on('data', this._data);
     this.on('render', this.render);
     this.on('destroy', this._destroy);
+  }
+
+  /**
+   * contentWidth, contentHeight: getter, return content width/height.
+   */
+  abstract get contentWidth(): number;
+  abstract get contentHeight(): number;
+
+  /**
+   * contentOffsetX, contentOffsetY: content top left position offset relative to 
+   * this.x, this.y.
+   */
+  abstract get contentOffsetX(): number;
+  abstract get contentOffsetY(): number;
+
+  /**
+   * absX, absY: absolute position at terminal.
+   */
+  get absX(): () => number {
+    let absx = 0;
+
+    return () => {
+      if (!this.parent) {
+        absx = this.x;
+      } else {
+        absx = this.x + this.parent.absX();
+      }
+
+      return absx;
+    }
+  }
+  get absY(): () => number {
+    let absy = 0;
+
+    return () => {
+      if (!this.parent) {
+        absy = this.y;
+      } else {
+        absy = this.y + this.parent.absY();
+      }
+
+      return absy;
+    }
   }
 
   bindKey(key: KEYS) {
@@ -43,16 +115,16 @@ export class Node extends EventEmitter {
 
   keypress(key: number) { }
 
-  render(program: Program | undefined) { }
+  abstract render(program: Program, parent: ParentNode): void;
 
   _destroy() {
     this.destroy();
   }
 
-  destroy() { }
+  abstract destroy(): void;
 }
 
-export class ParentNode extends Node {
+export abstract class ParentNode extends Node {
   children: Node[] = [];
 
   propagateEvent(eventName: string, data?: any) {
@@ -61,10 +133,10 @@ export class ParentNode extends Node {
     });
   }
 
-  appendChild(component: any) {
-    component.parent = this;
-    component.emit('render', this.program);
-    this.children.push(component);
+  appendChild(child: any) {
+    this.children.push(child);
+    child.parent = this;
+    child.emit('render', this.program, this);
   }
 
   _destroy() {
