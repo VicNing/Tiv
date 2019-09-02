@@ -7,9 +7,6 @@ class Screen extends node_1.ParentNode {
         super();
         this.options = options;
     }
-    data(data) {
-        this.propagateEvent('data', data);
-    }
     get contentWidth() {
         if (this.options.style && this.options.style.border) {
             if (this.width < 2) {
@@ -51,6 +48,9 @@ class Screen extends node_1.ParentNode {
         else {
             return 0;
         }
+    }
+    data(data) {
+        this.propagateEvent('data', data);
     }
     render(program, parent) {
         this.program = program;

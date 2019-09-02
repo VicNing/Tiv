@@ -95,6 +95,9 @@ class ParentNode extends Node {
     }
     _destroy() {
         this.propagateEvent('destroy');
+        this.removeAllListeners('data');
+        this.removeAllListeners('renden');
+        this.removeAllListeners('destroy');
         this.destroy();
     }
 }

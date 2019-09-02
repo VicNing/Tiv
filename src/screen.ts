@@ -8,10 +8,6 @@ export class Screen extends ParentNode {
     this.options = options;
   }
 
-  data(data: Buffer) {
-    this.propagateEvent('data', data);
-  }
-
   get contentWidth() {
     if (this.options.style && this.options.style.border) {
       if (this.width < 2) {
@@ -52,6 +48,9 @@ export class Screen extends ParentNode {
     }
   }
 
+  data(data: Buffer) {
+    this.propagateEvent('data', data);
+  }
 
   render(program: Program, parent: ParentNode) {
     this.program = program;

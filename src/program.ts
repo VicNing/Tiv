@@ -61,6 +61,7 @@ export class Program extends ParentNode {
 
   render() {
     this.input.setRawMode(true);
+    this.write('\n');
     this.input.on('data', (data: Buffer) => {
       this.emit('data', data);
     });

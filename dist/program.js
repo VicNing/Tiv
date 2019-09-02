@@ -46,6 +46,7 @@ class Program extends node_1.ParentNode {
     }
     render() {
         this.input.setRawMode(true);
+        this.write('\n');
         this.input.on('data', (data) => {
             this.emit('data', data);
         });

@@ -21,6 +21,7 @@ export class Input extends Node {
     this.options = options;
 
     this.bindKey(KEYS.return);
+    this.bindKey(KEYS.del);
   }
 
   get contentWidth() {
@@ -74,8 +75,16 @@ export class Input extends Node {
     if (key === KEYS.return) {
       this.emit('change', this.inputValue);
       this.reset();
+      return;
     }
 
+    if (key === KEYS.del) {
+      if (this.program && this.inputValue.length > 0) {
+        this.program.write('\u0008');//backspace
+        this.program.write('\x1b[X');//erase
+        this.inputValue = this.inputValue.slice(0, this.inputValue.length - 1);
+      }
+    }
   }
 
   reset() {
@@ -87,11 +96,6 @@ export class Input extends Node {
       if (this.options.prompt) {
         this.program.write(this.options.prompt);
       }
-
-      //todo underline
-      // if (this.options.underLine) {
-      //   this.program.write('\u001b[0m\u001b[4m');
-      // }
     }
   }
 
@@ -99,8 +103,8 @@ export class Input extends Node {
     this.program = program;
     this.parent = parent;
 
-    this.width = parent.contentWidth;
-    this.height = 3;//todo
+    this.width = parent.contentWidth - 20;
+    this.height = 10;//todo
 
     const parentContentX = parent.x + parent.contentOffsetX,
       parentContentY = parent.y + parent.contentOffsetY;

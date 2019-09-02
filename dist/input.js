@@ -11,6 +11,7 @@ class Input extends node_1.Node {
         this.y = options.y || 0;
         this.options = options;
         this.bindKey(key_1.KEYS.return);
+        this.bindKey(key_1.KEYS.del);
     }
     get contentWidth() {
         if (this.options.style && this.options.style.border) {
@@ -64,6 +65,14 @@ class Input extends node_1.Node {
         if (key === key_1.KEYS.return) {
             this.emit('change', this.inputValue);
             this.reset();
+            return;
+        }
+        if (key === key_1.KEYS.del) {
+            if (this.program && this.inputValue.length > 0) {
+                this.program.write('\u0008'); //backspace
+                this.program.write('\x1b[X'); //erase
+                this.inputValue = this.inputValue.slice(0, this.inputValue.length - 1);
+            }
         }
     }
     reset() {
@@ -73,17 +82,13 @@ class Input extends node_1.Node {
             if (this.options.prompt) {
                 this.program.write(this.options.prompt);
             }
-            //todo underline
-            // if (this.options.underLine) {
-            //   this.program.write('\u001b[0m\u001b[4m');
-            // }
         }
     }
     render(program, parent) {
         this.program = program;
         this.parent = parent;
-        this.width = parent.contentWidth;
-        this.height = 3; //todo
+        this.width = parent.contentWidth - 20;
+        this.height = 10; //todo
         const parentContentX = parent.x + parent.contentOffsetX, parentContentY = parent.y + parent.contentOffsetY;
         this.x = this.options.x ? this.options.x + parentContentX : parentContentX;
         this.y = this.options.y ? this.options.y + parentContentX : parentContentY;
