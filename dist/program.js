@@ -16,7 +16,6 @@ class Program extends node_1.ParentNode {
         }
         //todo updateWindowSize
         this.bindKey(key_1.KEYS.ctrl_c);
-        this.emit('render');
     }
     get rows() {
         return this.output.rows;
@@ -37,6 +36,11 @@ class Program extends node_1.ParentNode {
         return this.rows;
     }
     data(data) {
+        if (this._cursorPositionResolver) {
+            this.readCursorPosition(data);
+            this._cursorPositionResolver = undefined;
+            return;
+        }
         this.propagateEvent('data', data);
     }
     keypress(key) {
@@ -44,12 +48,14 @@ class Program extends node_1.ParentNode {
             this.emit('destroy');
         }
     }
-    render() {
+    async render() {
         this.input.setRawMode(true);
-        this.write('\n');
         this.input.on('data', (data) => {
             this.emit('data', data);
         });
+        const [x, y] = await this.getCursorPosition();
+        this.x = x;
+        this.y = y;
     }
     cursorTo(x, y) {
         this.output.cursorTo(x, y);
@@ -85,6 +91,32 @@ class Program extends node_1.ParentNode {
             }
         }
         return null;
+    }
+    async getCursorPosition() {
+        return new Promise((resolve, reject) => {
+            this.write('\u001b[6n');
+            this._cursorPositionResolver = resolve;
+        });
+    }
+    readCursorPosition(data) {
+        let row = [], col = [], split = false;
+        for (let i = 2; i < data.length - 1; i++) {
+            if (data[i] === 59) {
+                split = true;
+                continue;
+            }
+            if (!split) {
+                row.push(data[i]);
+            }
+            else {
+                col.push(data[i]);
+            }
+        }
+        const y = Number.parseInt(Buffer.from(row).toString()) - 1, x = Number.parseInt(Buffer.from(col).toString()) - 1;
+        if (this._cursorPositionResolver) {
+            this._cursorPositionResolver([x, y]);
+        }
+        return;
     }
     destroy() {
         process.exit();

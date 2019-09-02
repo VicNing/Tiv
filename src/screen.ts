@@ -62,7 +62,7 @@ export class Screen extends ParentNode {
     this.height = parent.contentHeight;
 
     program.write('\u001b[?1049h');//smcup
-    program.cursorTo(this.absX(), this.absY());
+    program.cursorTo(this.absX, this.absY);
     program.output.clearScreenDown();
 
     styling(this.options.style, this, program);

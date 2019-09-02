@@ -91,7 +91,7 @@ export class Input extends Node {
     this.inputValue = '';
 
     if (this.program) {
-      this.program.cursorTo(this.absX() + this.contentOffsetX, this.absY() + this.contentOffsetY);
+      this.program.cursorTo(this.absX + this.contentOffsetX, this.absY + this.contentOffsetY);
 
       if (this.options.prompt) {
         this.program.write(this.options.prompt);
@@ -103,16 +103,13 @@ export class Input extends Node {
     this.program = program;
     this.parent = parent;
 
-    this.width = parent.contentWidth - 20;
-    this.height = 10;//todo
+    this.width = parent.contentWidth;
+    this.height = 3;//todo
 
-    const parentContentX = parent.x + parent.contentOffsetX,
-      parentContentY = parent.y + parent.contentOffsetY;
+    this.x = this.options.x ? this.options.x + parent.contentOffsetX : parent.contentOffsetX;
+    this.y = this.options.y ? this.options.y + parent.contentOffsetY : parent.contentOffsetY;
 
-    this.x = this.options.x ? this.options.x + parentContentX : parentContentX;
-    this.y = this.options.y ? this.options.y + parentContentX : parentContentY;
-
-    this.program.clearArea(this.absX(), this.absY(), this.width, this.height);
+    this.program.clearArea(this.absX, this.absY, this.width, this.height);
 
     if (this.options.style) {
       styling(this.options.style, this, program);

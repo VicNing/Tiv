@@ -12,7 +12,7 @@ export interface StyleOptions {
 const drawBorder = function (borderStyle: BorderStyle, node: Node, program: Program) {
   if (program) {
     //top border
-    program.cursorTo(node.absX(), node.absY());
+    program.cursorTo(node.absX, node.absY);
     program.write('┏');
     for (let i = 1; i < node.width - 1; i++) {
       program.write('━');
@@ -20,14 +20,14 @@ const drawBorder = function (borderStyle: BorderStyle, node: Node, program: Prog
     program.write('┓');
 
     //right border
-    program.cursorTo(node.absX() + node.width - 1, node.absY() + 1);
+    program.cursorTo(node.absX + node.width - 1, node.absY + 1);
     for (let i = 1; i < node.height - 1; i++) {
       program.write('┃');
-      program.cursorTo(node.absX() + node.width - 1, node.absY() + 1 + i);
+      program.cursorTo(node.absX + node.width - 1, node.absY + 1 + i);
     }
 
     //botom border
-    program.cursorTo(node.absX(), node.absY() + node.height - 1);
+    program.cursorTo(node.absX, node.absY + node.height - 1);
     program.write('┗');
     for (let i = 1; i < node.width - 1; i++) {
       program.write('━');
@@ -35,10 +35,10 @@ const drawBorder = function (borderStyle: BorderStyle, node: Node, program: Prog
     program.write('┛');
 
     //left border
-    program.cursorTo(node.absX(), node.absY() + 1);
+    program.cursorTo(node.absX, node.absY + 1);
     for (let i = 1; i < node.height - 1; i++) {
       program.write('┃');
-      program.cursorTo(node.absX(), node.absY() + 1 + i);
+      program.cursorTo(node.absX, node.absY + 1 + i);
     }
   }
 }

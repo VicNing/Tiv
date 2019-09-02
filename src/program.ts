@@ -7,6 +7,7 @@ export class Program extends ParentNode {
   input: tty.ReadStream;
   output: tty.WriteStream;
   _screen: Screen | undefined;
+  _cursorPositionResolver: ((pos: number[]) => void) | undefined;
 
   constructor(options: any = {}) {
     super();
@@ -22,7 +23,6 @@ export class Program extends ParentNode {
     //todo updateWindowSize
 
     this.bindKey(KEYS.ctrl_c);
-    this.emit('render');
   }
 
   get rows(): number {
@@ -50,6 +50,12 @@ export class Program extends ParentNode {
   }
 
   data(data: Buffer) {
+    if (this._cursorPositionResolver) {
+      this.readCursorPosition(data);
+      this._cursorPositionResolver = undefined;
+      return;
+    }
+
     this.propagateEvent('data', data);
   }
 
@@ -59,12 +65,16 @@ export class Program extends ParentNode {
     }
   }
 
-  render() {
+  async render() {
     this.input.setRawMode(true);
-    this.write('\n');
+
     this.input.on('data', (data: Buffer) => {
       this.emit('data', data);
     });
+
+    const [x, y] = await this.getCursorPosition();
+    this.x = x;
+    this.y = y;
   }
 
   cursorTo(x: number, y: number) {
@@ -108,6 +118,38 @@ export class Program extends ParentNode {
       }
     }
     return null;
+  }
+
+  async getCursorPosition(): Promise<number[]> {
+    return new Promise((resolve, reject) => {
+      this.write('\u001b[6n');
+      this._cursorPositionResolver = resolve;
+    });
+  }
+
+  readCursorPosition(data: Buffer): void {
+    let row = [], col = [], split = false;
+
+    for (let i = 2; i < data.length - 1; i++) {
+      if (data[i] === 59) {
+        split = true;
+        continue
+      }
+
+      if (!split) {
+        row.push(data[i]);
+      } else {
+        col.push(data[i]);
+      }
+    }
+
+    const y = Number.parseInt(Buffer.from(row).toString()) - 1,
+      x = Number.parseInt(Buffer.from(col).toString()) - 1;
+
+    if (this._cursorPositionResolver) {
+      this._cursorPositionResolver([x, y]);
+    }
+    return
   }
 
   destroy() {

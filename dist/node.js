@@ -31,28 +31,20 @@ class Node extends events_1.EventEmitter {
      * absX, absY: absolute position at terminal.
      */
     get absX() {
-        let absx = 0;
-        return () => {
-            if (!this.parent) {
-                absx = this.x;
-            }
-            else {
-                absx = this.x + this.parent.absX();
-            }
-            return absx;
-        };
+        if (!this.parent) {
+            return this.x;
+        }
+        else {
+            return this.x + this.parent.absX;
+        }
     }
     get absY() {
-        let absy = 0;
-        return () => {
-            if (!this.parent) {
-                absy = this.y;
-            }
-            else {
-                absy = this.y + this.parent.absY();
-            }
-            return absy;
-        };
+        if (!this.parent) {
+            return this.y;
+        }
+        else {
+            return this.y + this.parent.absY;
+        }
     }
     bindKey(key) {
         this.keyBindings[key] = true;

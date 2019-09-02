@@ -78,7 +78,7 @@ class Input extends node_1.Node {
     reset() {
         this.inputValue = '';
         if (this.program) {
-            this.program.cursorTo(this.absX() + this.contentOffsetX, this.absY() + this.contentOffsetY);
+            this.program.cursorTo(this.absX + this.contentOffsetX, this.absY + this.contentOffsetY);
             if (this.options.prompt) {
                 this.program.write(this.options.prompt);
             }
@@ -87,12 +87,11 @@ class Input extends node_1.Node {
     render(program, parent) {
         this.program = program;
         this.parent = parent;
-        this.width = parent.contentWidth - 20;
-        this.height = 10; //todo
-        const parentContentX = parent.x + parent.contentOffsetX, parentContentY = parent.y + parent.contentOffsetY;
-        this.x = this.options.x ? this.options.x + parentContentX : parentContentX;
-        this.y = this.options.y ? this.options.y + parentContentX : parentContentY;
-        this.program.clearArea(this.absX(), this.absY(), this.width, this.height);
+        this.width = parent.contentWidth;
+        this.height = 3; //todo
+        this.x = this.options.x ? this.options.x + parent.contentOffsetX : parent.contentOffsetX;
+        this.y = this.options.y ? this.options.y + parent.contentOffsetY : parent.contentOffsetY;
+        this.program.clearArea(this.absX, this.absY, this.width, this.height);
         if (this.options.style) {
             styling_1.styling(this.options.style, this, program);
         }

@@ -59,7 +59,7 @@ class Screen extends node_1.ParentNode {
         this.width = parent.contentWidth;
         this.height = parent.contentHeight;
         program.write('\u001b[?1049h'); //smcup
-        program.cursorTo(this.absX(), this.absY());
+        program.cursorTo(this.absX, this.absY);
         program.output.clearScreenDown();
         styling_1.styling(this.options.style, this, program);
     }

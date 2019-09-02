@@ -64,30 +64,18 @@ export abstract class Node extends EventEmitter {
   /**
    * absX, absY: absolute position at terminal.
    */
-  get absX(): () => number {
-    let absx = 0;
-
-    return () => {
-      if (!this.parent) {
-        absx = this.x;
-      } else {
-        absx = this.x + this.parent.absX();
-      }
-
-      return absx;
+  get absX(): number {
+    if (!this.parent) {
+      return this.x;
+    } else {
+      return this.x + this.parent.absX;
     }
   }
-  get absY(): () => number {
-    let absy = 0;
-
-    return () => {
-      if (!this.parent) {
-        absy = this.y;
-      } else {
-        absy = this.y + this.parent.absY();
-      }
-
-      return absy;
+  get absY(): number {
+    if (!this.parent) {
+      return this.y;
+    } else {
+      return this.y + this.parent.absY;
     }
   }
 
