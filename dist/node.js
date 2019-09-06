@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const events_1 = require("events");
-;
 class Node extends events_1.EventEmitter {
     constructor() {
         super();
@@ -23,10 +22,10 @@ class Node extends events_1.EventEmitter {
          * options: construction options.
          */
         this.options = {};
-        this.on('data', this._data);
-        this.on('mount', this.mount);
-        this.on('resize', this.resize);
-        this.on('destroy', this._destroy);
+        this.on("data", this._data);
+        this.on("mount", this.mount);
+        this.on("resize", this.resize);
+        this.on("destroy", this._destroy);
     }
     /**
      * absX, absY: absolute position at terminal.
@@ -49,7 +48,7 @@ class Node extends events_1.EventEmitter {
     }
     bindKey(key) {
         if (Array.isArray(key)) {
-            key.forEach(k => this.keyBindings[k] = true);
+            key.forEach(k => (this.keyBindings[k] = true));
         }
         else {
             this.keyBindings[key] = true;
@@ -89,13 +88,13 @@ class ParentNode extends Node {
     appendChild(child) {
         this.children.push(child);
         child.parent = this;
-        child.emit('mount', this.program, this);
+        child.emit("mount", this.program, this);
     }
     _destroy() {
-        this.propagateEvent('destroy');
-        this.removeAllListeners('data');
-        this.removeAllListeners('renden');
-        this.removeAllListeners('destroy');
+        this.propagateEvent("destroy");
+        this.removeAllListeners("data");
+        this.removeAllListeners("renden");
+        this.removeAllListeners("destroy");
         this.destroy();
     }
 }

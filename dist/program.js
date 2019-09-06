@@ -12,7 +12,7 @@ class Program extends node_1.ParentNode {
         this.input = options.input || process.stdin;
         this.output = options.output || process.stdout;
         if (!this.input.isTTY) {
-            throw Error('Not in a terminal emulator.');
+            throw Error("Not in a terminal emulator.");
         }
         this.bindKey(key_1.KEYS.ctrl_c);
     }
@@ -40,17 +40,17 @@ class Program extends node_1.ParentNode {
             this._cursorPositionResolver = undefined;
             return;
         }
-        this.propagateEvent('data', data);
+        this.propagateEvent("data", data);
     }
     keypress(key) {
         if (key === key_1.KEYS.ctrl_c) {
-            this.emit('destroy');
+            this.emit("destroy");
         }
     }
     async mount() {
         this.input.setRawMode(true);
-        this.input.on('data', (data) => {
-            this.emit('data', data);
+        this.input.on("data", (data) => {
+            this.emit("data", data);
         });
         await this.render();
     }
@@ -66,12 +66,12 @@ class Program extends node_1.ParentNode {
         this.cursorTo(0, 0);
         await this.render();
         this.children.forEach(child => {
-            child.emit('resize');
+            child.emit("resize");
         });
     }
     listenResize() {
-        this.output.on('resize', async () => {
-            this.emit('resize');
+        this.output.on("resize", async () => {
+            this.emit("resize");
         });
     }
     cursorTo(x, y) {
@@ -84,7 +84,7 @@ class Program extends node_1.ParentNode {
         for (let i = 0; i < height; i++) {
             this.cursorTo(x, y + i);
             for (let j = 0; j < width; j++) {
-                this.write(' ');
+                this.write(" ");
             }
         }
     }
@@ -93,10 +93,10 @@ class Program extends node_1.ParentNode {
     }
     appendChild(component) {
         this.children.push(component);
-        component.emit('mount', this, this);
+        component.emit("mount", this, this);
     }
     fullScreen() {
-        this.write('\u001b[?1049h'); //smcup
+        this.write("\u001b[?1049h"); //smcup
         this.x = 0;
         this.y = 0;
     }
@@ -107,7 +107,7 @@ class Program extends node_1.ParentNode {
         for (let i = 0; i < this.children.length; i++) {
             const child = this.children[i];
             if (child instanceof screen_1.Screen) {
-                this._screen = (this.children[i]);
+                this._screen = this.children[i];
                 return this.screen;
             }
         }
@@ -115,7 +115,7 @@ class Program extends node_1.ParentNode {
     }
     async getCursorPosition() {
         return new Promise((resolve, reject) => {
-            this.write('\u001b[6n');
+            this.write("\u001b[6n");
             this._cursorPositionResolver = resolve;
         });
     }

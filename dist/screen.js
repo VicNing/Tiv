@@ -50,7 +50,7 @@ class Screen extends node_1.ParentNode {
         }
     }
     data(data) {
-        this.propagateEvent('data', data);
+        this.propagateEvent("data", data);
     }
     mount(program, parent) {
         this.program = program;
@@ -72,13 +72,13 @@ class Screen extends node_1.ParentNode {
         if (this.program && this.parent) {
             this.render(this.program, this.parent);
             this.children.forEach(child => {
-                child.emit('resize');
+                child.emit("resize");
             });
         }
     }
     destroy() {
         if (this.program) {
-            this.program.write('\u001b[?1049l'); //rmcup
+            this.program.write("\u001b[?1049l"); //rmcup
         }
     }
 }

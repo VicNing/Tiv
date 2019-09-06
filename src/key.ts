@@ -5,5 +5,5 @@ export enum KEYS {
   up_arrow = 0x415b1b,
   down_arrow = 0x425b1b,
   right_arrow = 0x435b1b,
-  left_arrow = 0x445b1b,
+  left_arrow = 0x445b1b
 }

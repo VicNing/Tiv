@@ -1,7 +1,7 @@
-import { KEYS } from './key'
-import { Screen } from './screen'
-import * as tty from 'tty'
-import { ParentNode } from './node'
+import { KEYS } from "./key";
+import { Screen } from "./screen";
+import * as tty from "tty";
+import { ParentNode } from "./node";
 
 export class Program extends ParentNode {
   input: tty.ReadStream;
@@ -15,9 +15,8 @@ export class Program extends ParentNode {
     this.input = options.input || process.stdin;
     this.output = options.output || process.stdout;
 
-
     if (!this.input.isTTY) {
-      throw Error('Not in a terminal emulator.');
+      throw Error("Not in a terminal emulator.");
     }
 
     this.bindKey(KEYS.ctrl_c);
@@ -54,20 +53,20 @@ export class Program extends ParentNode {
       return;
     }
 
-    this.propagateEvent('data', data);
+    this.propagateEvent("data", data);
   }
 
   keypress(key: number) {
     if (key === KEYS.ctrl_c) {
-      this.emit('destroy');
+      this.emit("destroy");
     }
   }
 
   async mount() {
     this.input.setRawMode(true);
 
-    this.input.on('data', (data: Buffer) => {
-      this.emit('data', data);
+    this.input.on("data", (data: Buffer) => {
+      this.emit("data", data);
     });
 
     await this.render();
@@ -88,13 +87,13 @@ export class Program extends ParentNode {
 
     await this.render();
     this.children.forEach(child => {
-      child.emit('resize');
+      child.emit("resize");
     });
   }
 
   listenResize() {
-    this.output.on('resize', async () => {
-      this.emit('resize');
+    this.output.on("resize", async () => {
+      this.emit("resize");
     });
   }
 
@@ -110,7 +109,7 @@ export class Program extends ParentNode {
     for (let i = 0; i < height; i++) {
       this.cursorTo(x, y + i);
       for (let j = 0; j < width; j++) {
-        this.write(' ');
+        this.write(" ");
       }
     }
   }
@@ -121,11 +120,11 @@ export class Program extends ParentNode {
 
   appendChild(component: any) {
     this.children.push(component);
-    component.emit('mount', this, this);
+    component.emit("mount", this, this);
   }
 
   fullScreen() {
-    this.write('\u001b[?1049h');//smcup
+    this.write("\u001b[?1049h"); //smcup
     this.x = 0;
     this.y = 0;
   }
@@ -139,7 +138,7 @@ export class Program extends ParentNode {
       const child = this.children[i];
 
       if (child instanceof Screen) {
-        this._screen = (this.children[i]) as Screen;
+        this._screen = this.children[i] as Screen;
         return this.screen;
       }
     }
@@ -148,18 +147,20 @@ export class Program extends ParentNode {
 
   async getCursorPosition(): Promise<number[]> {
     return new Promise((resolve, reject) => {
-      this.write('\u001b[6n');
+      this.write("\u001b[6n");
       this._cursorPositionResolver = resolve;
     });
   }
 
   readCursorPosition(data: Buffer): void {
-    let row = [], col = [], split = false;
+    let row = [],
+      col = [],
+      split = false;
 
     for (let i = 2; i < data.length - 1; i++) {
       if (data[i] === 59) {
         split = true;
-        continue
+        continue;
       }
 
       if (!split) {
@@ -175,7 +176,7 @@ export class Program extends ParentNode {
     if (this._cursorPositionResolver) {
       this._cursorPositionResolver([x, y]);
     }
-    return
+    return;
   }
 
   destroy() {
@@ -183,5 +184,5 @@ export class Program extends ParentNode {
   }
 }
 
-export * from './screen'
-export * from './input'
+export * from "./screen";
+export * from "./input";

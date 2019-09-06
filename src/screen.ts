@@ -1,6 +1,6 @@
-import { Program } from './program';
-import { ParentNode } from './node'
-import { styling } from './styling'
+import { Program } from "./program";
+import { ParentNode } from "./node";
+import { styling } from "./styling";
 
 export class Screen extends ParentNode {
   constructor(options = {}) {
@@ -49,7 +49,7 @@ export class Screen extends ParentNode {
   }
 
   data(data: Buffer) {
-    this.propagateEvent('data', data);
+    this.propagateEvent("data", data);
   }
 
   mount(program: Program, parent: ParentNode) {
@@ -81,14 +81,14 @@ export class Screen extends ParentNode {
       this.render(this.program, this.parent);
 
       this.children.forEach(child => {
-        child.emit('resize');
+        child.emit("resize");
       });
     }
   }
 
   destroy() {
     if (this.program) {
-      this.program.write('\u001b[?1049l');//rmcup
+      this.program.write("\u001b[?1049l"); //rmcup
     }
   }
 }

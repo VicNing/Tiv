@@ -1,17 +1,17 @@
-import { Program } from './program'
-import { KEYS } from './key';
-import { Node, NodeOptions, ParentNode } from './node'
-import { styling } from './styling';
+import { Program } from "./program";
+import { KEYS } from "./key";
+import { Node, NodeOptions, ParentNode } from "./node";
+import { styling } from "./styling";
 
 interface InputOptions extends NodeOptions {
-  x?: number,
-  y?: number,
-  prompt?: string,
-  underLine?: boolean
+  x?: number;
+  y?: number;
+  prompt?: string;
+  underLine?: boolean;
 }
 
 export class Input extends Node {
-  inputValue: string = '';
+  inputValue: string = "";
   options: InputOptions;
 
   constructor(options: InputOptions = {}) {
@@ -20,7 +20,14 @@ export class Input extends Node {
     this.y = options.y || 0;
     this.options = options;
 
-    this.bindKey([KEYS.return, KEYS.del, KEYS.up_arrow, KEYS.down_arrow, KEYS.right_arrow, KEYS.left_arrow]);
+    this.bindKey([
+      KEYS.return,
+      KEYS.del,
+      KEYS.up_arrow,
+      KEYS.down_arrow,
+      KEYS.right_arrow,
+      KEYS.left_arrow
+    ]);
   }
 
   get contentWidth() {
@@ -72,27 +79,30 @@ export class Input extends Node {
 
   keypress(key: number) {
     if (key === KEYS.return) {
-      this.emit('change', this.inputValue);
+      this.emit("change", this.inputValue);
       this.reset();
       return;
     }
 
     if (key === KEYS.del) {
       if (this.program && this.inputValue.length > 0) {
-        this.program.write('\u0008');//backspace
-        this.program.write('\x1b[X');//erase
+        this.program.write("\u0008"); //backspace
+        this.program.write("\x1b[X"); //erase
         this.inputValue = this.inputValue.slice(0, this.inputValue.length - 1);
       }
     }
   }
 
   reset() {
-    this.inputValue = '';
+    this.inputValue = "";
 
     if (this.program) {
       this.clearContent();
 
-      this.program.cursorTo(this.absX + this.contentOffsetX, this.absY + this.contentOffsetY);
+      this.program.cursorTo(
+        this.absX + this.contentOffsetX,
+        this.absY + this.contentOffsetY
+      );
 
       if (this.options.prompt) {
         this.program.write(this.options.prompt);
@@ -102,7 +112,12 @@ export class Input extends Node {
 
   clearContent() {
     if (this.program) {
-      this.program.clearArea(this.absX + this.contentOffsetX, this.absY + this.contentOffsetY, this.contentWidth, this.contentHeight);
+      this.program.clearArea(
+        this.absX + this.contentOffsetX,
+        this.absY + this.contentOffsetY,
+        this.contentWidth,
+        this.contentHeight
+      );
     }
   }
 
@@ -114,12 +129,15 @@ export class Input extends Node {
   }
 
   render(program: Program, parent: ParentNode) {
-
     this.width = parent.contentWidth;
-    this.height = 3;//todo
+    this.height = 3; //todo
 
-    this.x = this.options.x ? this.options.x + parent.contentOffsetX : parent.contentOffsetX;
-    this.y = this.options.y ? this.options.y + parent.contentOffsetY : parent.contentOffsetY;
+    this.x = this.options.x
+      ? this.options.x + parent.contentOffsetX
+      : parent.contentOffsetX;
+    this.y = this.options.y
+      ? this.options.y + parent.contentOffsetY
+      : parent.contentOffsetY;
 
     program.clearArea(this.absX, this.absY, this.width, this.height);
 
@@ -140,5 +158,5 @@ export class Input extends Node {
     }
   }
 
-  destroy() { }
+  destroy() {}
 }

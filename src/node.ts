@@ -1,11 +1,11 @@
 import { EventEmitter } from "events";
-import { Program } from './program'
+import { Program } from "./program";
 import { KEYS } from "./key";
-import { StyleOptions } from './styling'
+import { StyleOptions } from "./styling";
 
 export interface NodeOptions {
-  style?: StyleOptions
-};
+  style?: StyleOptions;
+}
 
 export abstract class Node extends EventEmitter {
   /**
@@ -38,15 +38,15 @@ export abstract class Node extends EventEmitter {
   /**
    * options: construction options.
    */
-  options: NodeOptions = {}
+  options: NodeOptions = {};
 
   constructor() {
     super();
 
-    this.on('data', this._data);
-    this.on('mount', this.mount);
-    this.on('resize', this.resize);
-    this.on('destroy', this._destroy);
+    this.on("data", this._data);
+    this.on("mount", this.mount);
+    this.on("resize", this.resize);
+    this.on("destroy", this._destroy);
   }
 
   /**
@@ -56,7 +56,7 @@ export abstract class Node extends EventEmitter {
   abstract get contentHeight(): number;
 
   /**
-   * contentOffsetX, contentOffsetY: content top left position offset relative to 
+   * contentOffsetX, contentOffsetY: content top left position offset relative to
    * this.x, this.y.
    */
   abstract get contentOffsetX(): number;
@@ -82,7 +82,7 @@ export abstract class Node extends EventEmitter {
 
   bindKey(key: KEYS | KEYS[]): void {
     if (Array.isArray(key)) {
-      key.forEach(k => this.keyBindings[k] = true);
+      key.forEach(k => (this.keyBindings[k] = true));
     } else {
       this.keyBindings[key] = true;
     }
@@ -94,19 +94,17 @@ export abstract class Node extends EventEmitter {
 
       if (this.keyBindings[keyCode]) {
         this.keypress(keyCode);
-      }
-      else {
+      } else {
         this.data(data);
       }
     } else {
       this.data(data);
     }
-
   }
 
-  data(data: Buffer) { }
+  data(data: Buffer) {}
 
-  keypress(key: number) { }
+  keypress(key: number) {}
 
   abstract resize(): void;
 
@@ -133,15 +131,15 @@ export abstract class ParentNode extends Node {
   appendChild(child: any) {
     this.children.push(child);
     child.parent = this;
-    child.emit('mount', this.program, this);
+    child.emit("mount", this.program, this);
   }
 
   _destroy() {
-    this.propagateEvent('destroy');
+    this.propagateEvent("destroy");
 
-    this.removeAllListeners('data');
-    this.removeAllListeners('renden');
-    this.removeAllListeners('destroy');
+    this.removeAllListeners("data");
+    this.removeAllListeners("renden");
+    this.removeAllListeners("destroy");
 
     this.destroy();
   }
