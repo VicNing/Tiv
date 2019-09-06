@@ -24,7 +24,8 @@ class Node extends events_1.EventEmitter {
          */
         this.options = {};
         this.on('data', this._data);
-        this.on('render', this.render);
+        this.on('mount', this.mount);
+        this.on('resize', this.resize);
         this.on('destroy', this._destroy);
     }
     /**
@@ -47,7 +48,12 @@ class Node extends events_1.EventEmitter {
         }
     }
     bindKey(key) {
-        this.keyBindings[key] = true;
+        if (Array.isArray(key)) {
+            key.forEach(k => this.keyBindings[k] = true);
+        }
+        else {
+            this.keyBindings[key] = true;
+        }
     }
     _data(data) {
         if (data.length <= 6) {
@@ -83,7 +89,7 @@ class ParentNode extends Node {
     appendChild(child) {
         this.children.push(child);
         child.parent = this;
-        child.emit('render', this.program, this);
+        child.emit('mount', this.program, this);
     }
     _destroy() {
         this.propagateEvent('destroy');

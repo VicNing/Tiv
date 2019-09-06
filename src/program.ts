@@ -20,8 +20,6 @@ export class Program extends ParentNode {
       throw Error('Not in a terminal emulator.');
     }
 
-    //todo updateWindowSize
-
     this.bindKey(KEYS.ctrl_c);
   }
 
@@ -65,16 +63,39 @@ export class Program extends ParentNode {
     }
   }
 
-  async render() {
+  async mount() {
     this.input.setRawMode(true);
 
     this.input.on('data', (data: Buffer) => {
       this.emit('data', data);
     });
 
+    await this.render();
+  }
+
+  async render() {
     const [x, y] = await this.getCursorPosition();
+
     this.x = x;
     this.y = y;
+    this.width = this.columns;
+    this.height = this.rows;
+  }
+
+  async resize() {
+    //only triggers resize under fullscreen mode.
+    this.cursorTo(0, 0);
+
+    await this.render();
+    this.children.forEach(child => {
+      child.emit('resize');
+    });
+  }
+
+  listenResize() {
+    this.output.on('resize', async () => {
+      this.emit('resize');
+    });
   }
 
   cursorTo(x: number, y: number) {
@@ -86,12 +107,11 @@ export class Program extends ParentNode {
   }
 
   clearArea(x: number, y: number, width: number, height: number) {
-    this.cursorTo(x, y);
-    for (let i = 0; i < height - 1; i++) {
-      for (let j = 0; j < width - 1; j++) {
+    for (let i = 0; i < height; i++) {
+      this.cursorTo(x, y + i);
+      for (let j = 0; j < width; j++) {
         this.write(' ');
       }
-      this.cursorTo(x + 1, y);
     }
   }
 
@@ -101,7 +121,13 @@ export class Program extends ParentNode {
 
   appendChild(component: any) {
     this.children.push(component);
-    component.emit('render', this, this);
+    component.emit('mount', this, this);
+  }
+
+  fullScreen() {
+    this.write('\u001b[?1049h');//smcup
+    this.x = 0;
+    this.y = 0;
   }
 
   get screen(): Screen | null {

@@ -28,7 +28,7 @@ export abstract class Node extends EventEmitter {
   /**
    * parent: parent node attatched to. Usually Intialized at render callback.
    */
-  parent: Node | undefined;
+  parent: ParentNode | undefined;
 
   /**
    * keyBindings: key binding regsitry.
@@ -44,7 +44,8 @@ export abstract class Node extends EventEmitter {
     super();
 
     this.on('data', this._data);
-    this.on('render', this.render);
+    this.on('mount', this.mount);
+    this.on('resize', this.resize);
     this.on('destroy', this._destroy);
   }
 
@@ -79,8 +80,12 @@ export abstract class Node extends EventEmitter {
     }
   }
 
-  bindKey(key: KEYS) {
-    this.keyBindings[key] = true;
+  bindKey(key: KEYS | KEYS[]): void {
+    if (Array.isArray(key)) {
+      key.forEach(k => this.keyBindings[k] = true);
+    } else {
+      this.keyBindings[key] = true;
+    }
   }
 
   _data(data: Buffer) {
@@ -103,6 +108,10 @@ export abstract class Node extends EventEmitter {
 
   keypress(key: number) { }
 
+  abstract resize(): void;
+
+  abstract mount(program: Program, parent: ParentNode): void;
+
   abstract render(program: Program, parent: ParentNode): void;
 
   _destroy() {
@@ -124,7 +133,7 @@ export abstract class ParentNode extends Node {
   appendChild(child: any) {
     this.children.push(child);
     child.parent = this;
-    child.emit('render', this.program, this);
+    child.emit('mount', this.program, this);
   }
 
   _destroy() {

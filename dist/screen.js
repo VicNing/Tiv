@@ -52,16 +52,29 @@ class Screen extends node_1.ParentNode {
     data(data) {
         this.propagateEvent('data', data);
     }
-    render(program, parent) {
+    mount(program, parent) {
         this.program = program;
+        this.parent = parent;
+        program.fullScreen();
+        program.listenResize();
+        this.render(program, parent);
+    }
+    render(program, parent) {
         this.x = 0;
         this.y = 0;
-        this.width = parent.contentWidth;
-        this.height = parent.contentHeight;
-        program.write('\u001b[?1049h'); //smcup
         program.cursorTo(this.absX, this.absY);
         program.output.clearScreenDown();
+        this.width = parent.contentWidth;
+        this.height = parent.contentHeight;
         styling_1.styling(this.options.style, this, program);
+    }
+    resize() {
+        if (this.program && this.parent) {
+            this.render(this.program, this.parent);
+            this.children.forEach(child => {
+                child.emit('resize');
+            });
+        }
     }
     destroy() {
         if (this.program) {

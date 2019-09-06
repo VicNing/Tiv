@@ -20,8 +20,7 @@ export class Input extends Node {
     this.y = options.y || 0;
     this.options = options;
 
-    this.bindKey(KEYS.return);
-    this.bindKey(KEYS.del);
+    this.bindKey([KEYS.return, KEYS.del, KEYS.up_arrow, KEYS.down_arrow, KEYS.right_arrow, KEYS.left_arrow]);
   }
 
   get contentWidth() {
@@ -91,6 +90,8 @@ export class Input extends Node {
     this.inputValue = '';
 
     if (this.program) {
+      this.clearContent();
+
       this.program.cursorTo(this.absX + this.contentOffsetX, this.absY + this.contentOffsetY);
 
       if (this.options.prompt) {
@@ -99,9 +100,20 @@ export class Input extends Node {
     }
   }
 
-  render(program: Program, parent: ParentNode) {
+  clearContent() {
+    if (this.program) {
+      this.program.clearArea(this.absX + this.contentOffsetX, this.absY + this.contentOffsetY, this.contentWidth, this.contentHeight);
+    }
+  }
+
+  mount(program: Program, parent: ParentNode) {
     this.program = program;
     this.parent = parent;
+
+    this.render(program, parent);
+  }
+
+  render(program: Program, parent: ParentNode) {
 
     this.width = parent.contentWidth;
     this.height = 3;//todo
@@ -109,14 +121,23 @@ export class Input extends Node {
     this.x = this.options.x ? this.options.x + parent.contentOffsetX : parent.contentOffsetX;
     this.y = this.options.y ? this.options.y + parent.contentOffsetY : parent.contentOffsetY;
 
-    this.program.clearArea(this.absX, this.absY, this.width, this.height);
+    program.clearArea(this.absX, this.absY, this.width, this.height);
 
     if (this.options.style) {
       styling(this.options.style, this, program);
     }
 
-    this.bindKey(KEYS.return);
     this.reset();
+  }
+
+  resize() {
+    if (this.program && this.parent) {
+      this.render(this.program, this.parent);
+
+      if (this.inputValue) {
+        this.program.write(this.inputValue);
+      }
+    }
   }
 
   destroy() { }

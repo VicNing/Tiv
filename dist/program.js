@@ -14,7 +14,6 @@ class Program extends node_1.ParentNode {
         if (!this.input.isTTY) {
             throw Error('Not in a terminal emulator.');
         }
-        //todo updateWindowSize
         this.bindKey(key_1.KEYS.ctrl_c);
     }
     get rows() {
@@ -48,14 +47,32 @@ class Program extends node_1.ParentNode {
             this.emit('destroy');
         }
     }
-    async render() {
+    async mount() {
         this.input.setRawMode(true);
         this.input.on('data', (data) => {
             this.emit('data', data);
         });
+        await this.render();
+    }
+    async render() {
         const [x, y] = await this.getCursorPosition();
         this.x = x;
         this.y = y;
+        this.width = this.columns;
+        this.height = this.rows;
+    }
+    async resize() {
+        //only triggers resize under fullscreen mode.
+        this.cursorTo(0, 0);
+        await this.render();
+        this.children.forEach(child => {
+            child.emit('resize');
+        });
+    }
+    listenResize() {
+        this.output.on('resize', async () => {
+            this.emit('resize');
+        });
     }
     cursorTo(x, y) {
         this.output.cursorTo(x, y);
@@ -64,12 +81,11 @@ class Program extends node_1.ParentNode {
         this.output.clearLine(dir);
     }
     clearArea(x, y, width, height) {
-        this.cursorTo(x, y);
-        for (let i = 0; i < height - 1; i++) {
-            for (let j = 0; j < width - 1; j++) {
+        for (let i = 0; i < height; i++) {
+            this.cursorTo(x, y + i);
+            for (let j = 0; j < width; j++) {
                 this.write(' ');
             }
-            this.cursorTo(x + 1, y);
         }
     }
     write(data) {
@@ -77,7 +93,12 @@ class Program extends node_1.ParentNode {
     }
     appendChild(component) {
         this.children.push(component);
-        component.emit('render', this, this);
+        component.emit('mount', this, this);
+    }
+    fullScreen() {
+        this.write('\u001b[?1049h'); //smcup
+        this.x = 0;
+        this.y = 0;
     }
     get screen() {
         if (this._screen) {

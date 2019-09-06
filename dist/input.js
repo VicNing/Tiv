@@ -10,8 +10,7 @@ class Input extends node_1.Node {
         this.x = options.x || 0;
         this.y = options.y || 0;
         this.options = options;
-        this.bindKey(key_1.KEYS.return);
-        this.bindKey(key_1.KEYS.del);
+        this.bindKey([key_1.KEYS.return, key_1.KEYS.del, key_1.KEYS.up_arrow, key_1.KEYS.down_arrow, key_1.KEYS.right_arrow, key_1.KEYS.left_arrow]);
     }
     get contentWidth() {
         if (this.options.style && this.options.style.border) {
@@ -78,25 +77,41 @@ class Input extends node_1.Node {
     reset() {
         this.inputValue = '';
         if (this.program) {
+            this.clearContent();
             this.program.cursorTo(this.absX + this.contentOffsetX, this.absY + this.contentOffsetY);
             if (this.options.prompt) {
                 this.program.write(this.options.prompt);
             }
         }
     }
-    render(program, parent) {
+    clearContent() {
+        if (this.program) {
+            this.program.clearArea(this.absX + this.contentOffsetX, this.absY + this.contentOffsetY, this.contentWidth, this.contentHeight);
+        }
+    }
+    mount(program, parent) {
         this.program = program;
         this.parent = parent;
+        this.render(program, parent);
+    }
+    render(program, parent) {
         this.width = parent.contentWidth;
         this.height = 3; //todo
         this.x = this.options.x ? this.options.x + parent.contentOffsetX : parent.contentOffsetX;
         this.y = this.options.y ? this.options.y + parent.contentOffsetY : parent.contentOffsetY;
-        this.program.clearArea(this.absX, this.absY, this.width, this.height);
+        program.clearArea(this.absX, this.absY, this.width, this.height);
         if (this.options.style) {
             styling_1.styling(this.options.style, this, program);
         }
-        this.bindKey(key_1.KEYS.return);
         this.reset();
+    }
+    resize() {
+        if (this.program && this.parent) {
+            this.render(this.program, this.parent);
+            if (this.inputValue) {
+                this.program.write(this.inputValue);
+            }
+        }
     }
     destroy() { }
 }

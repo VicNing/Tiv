@@ -52,21 +52,38 @@ export class Screen extends ParentNode {
     this.propagateEvent('data', data);
   }
 
-  render(program: Program, parent: ParentNode) {
+  mount(program: Program, parent: ParentNode) {
     this.program = program;
+    this.parent = parent;
 
+    program.fullScreen();
+
+    program.listenResize();
+
+    this.render(program, parent);
+  }
+
+  render(program: Program, parent: ParentNode) {
     this.x = 0;
     this.y = 0;
+
+    program.cursorTo(this.absX, this.absY);
+    program.output.clearScreenDown();
 
     this.width = parent.contentWidth;
     this.height = parent.contentHeight;
 
-    program.write('\u001b[?1049h');//smcup
-    program.cursorTo(this.absX, this.absY);
-    program.output.clearScreenDown();
-
     styling(this.options.style, this, program);
+  }
 
+  resize() {
+    if (this.program && this.parent) {
+      this.render(this.program, this.parent);
+
+      this.children.forEach(child => {
+        child.emit('resize');
+      });
+    }
   }
 
   destroy() {
