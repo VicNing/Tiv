@@ -71,6 +71,10 @@ class Node extends events_1.EventEmitter {
     data(data) { }
     keypress(key) { }
     _destroy() {
+        this.removeAllListeners("destroy");
+        this.removeAllListeners("resize");
+        this.removeAllListeners("mount");
+        this.removeAllListeners("data");
         this.destroy();
     }
 }
@@ -92,10 +96,7 @@ class ParentNode extends Node {
     }
     _destroy() {
         this.propagateEvent("destroy");
-        this.removeAllListeners("data");
-        this.removeAllListeners("renden");
-        this.removeAllListeners("destroy");
-        this.destroy();
+        super._destroy();
     }
 }
 exports.ParentNode = ParentNode;

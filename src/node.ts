@@ -113,6 +113,11 @@ export abstract class Node extends EventEmitter {
   abstract render(program: Program, parent: ParentNode): void;
 
   _destroy() {
+    this.removeAllListeners("destroy");
+    this.removeAllListeners("resize");
+    this.removeAllListeners("mount");
+    this.removeAllListeners("data");
+
     this.destroy();
   }
 
@@ -137,10 +142,6 @@ export abstract class ParentNode extends Node {
   _destroy() {
     this.propagateEvent("destroy");
 
-    this.removeAllListeners("data");
-    this.removeAllListeners("renden");
-    this.removeAllListeners("destroy");
-
-    this.destroy();
+    super._destroy();
   }
 }
