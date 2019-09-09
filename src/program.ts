@@ -129,22 +129,6 @@ export class Program extends ParentNode {
     this.y = 0;
   }
 
-  get screen(): Screen | null {
-    if (this._screen) {
-      return this._screen;
-    }
-
-    for (let i = 0; i < this.children.length; i++) {
-      const child = this.children[i];
-
-      if (child instanceof Screen) {
-        this._screen = this.children[i] as Screen;
-        return this.screen;
-      }
-    }
-    return null;
-  }
-
   async getCursorPosition(): Promise<number[]> {
     return new Promise((resolve, reject) => {
       this.write("\u001b[6n");

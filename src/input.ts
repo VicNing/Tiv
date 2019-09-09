@@ -7,7 +7,6 @@ interface InputOptions extends NodeOptions {
   x?: number;
   y?: number;
   prompt?: string;
-  underLine?: boolean;
 }
 
 export class Input extends Node {

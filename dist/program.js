@@ -4,7 +4,6 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 const key_1 = require("./key");
-const screen_1 = require("./screen");
 const node_1 = require("./node");
 class Program extends node_1.ParentNode {
     constructor(options = {}) {
@@ -99,19 +98,6 @@ class Program extends node_1.ParentNode {
         this.write("\u001b[?1049h"); //smcup
         this.x = 0;
         this.y = 0;
-    }
-    get screen() {
-        if (this._screen) {
-            return this._screen;
-        }
-        for (let i = 0; i < this.children.length; i++) {
-            const child = this.children[i];
-            if (child instanceof screen_1.Screen) {
-                this._screen = this.children[i];
-                return this.screen;
-            }
-        }
-        return null;
     }
     async getCursorPosition() {
         return new Promise((resolve, reject) => {
