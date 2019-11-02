@@ -6,6 +6,6 @@
 		"module":"CommonJS"
 	},
 	"includes":[
-		"src/**/*.ts"
+		"new-src/**/*.ts"
 	]
 }
