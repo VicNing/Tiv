@@ -5,7 +5,7 @@
 		"outDir":"dist",
 		"module":"CommonJS"
 	},
-	"includes":[
-		"new-src/**/*.ts"
+	"include":[
+		"src/**/*.ts"
 	]
 }

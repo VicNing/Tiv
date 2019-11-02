@@ -1,94 +1,83 @@
-import { Program } from "./program";
-import { ParentNode } from "./node";
-import { styling } from "./styling";
+import terminal from './terminal'
+import Element from './element'
+import { KEYS } from './keys'
 
-export class Screen extends ParentNode {
-  constructor(options = {}) {
-    super();
-    this.options = options;
+export class Screen {
+  _keyHandlers: { [index: number]: Array<() => void> } = {};
+  rendered: boolean = false
+  children: Array<Element> = []
+
+  get width(): number {
+    return this.rendered ? terminal.getWidth() : 0;
   }
 
-  get contentWidth() {
-    if (this.options.style && this.options.style.border) {
-      if (this.width < 2) {
-        return 0;
-      } else {
-        return this.width - 2;
+  get height(): number {
+    return this.rendered ? terminal.getHeight() : 0;
+  }
+
+  get left(): number {
+    return 0;
+  }
+
+  get top(): number {
+    return 0;
+  }
+
+  constructor(options: Object) {
+    this.bindKey(KEYS.ctrl_c, () => {
+      process.exit();
+    });
+  }
+
+  render() {
+    return this._render();
+  }
+
+  _render() {
+    terminal.initialize();
+    terminal.on('data', this._onData.bind(this));
+
+    this.rendered = true;
+
+    if (this.children.length > 0) {
+      this.children.forEach(child => child._render());
+    }
+  }
+
+  bindKey(key: KEYS, cb: () => void) {
+    if (!this._keyHandlers[key]) {
+      this._keyHandlers[key] = [];
+    }
+
+    this._keyHandlers[key].push(cb);
+  }
+
+  private _onKeyPress(data: Buffer): boolean {
+    if (data.length <= 6) {
+      const keyCode = data.readIntLE(0, data.length);
+      if (this._keyHandlers[keyCode]) {
+        this._keyHandlers[keyCode].forEach(cb => cb());
+        return true;
       }
-    } else {
-      return this.width;
     }
+
+    return false;
   }
 
-  get contentHeight() {
-    if (this.options.style && this.options.style.border) {
-      if (this.height < 2) {
-        return 0;
-      } else {
-        return this.height - 2;
-      }
-    } else {
-      return this.height;
+  private _onData(data: Buffer) {
+    if (this._onKeyPress(data)) {
+      return
     }
+
+    terminal.write(data);
   }
 
-  get contentOffsetX() {
-    if (this.options.style && this.options.style.border) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
+  appendChild(child: Element) {
+    child.parent = this;
+    this.children.push(child);
 
-  get contentOffsetY() {
-    if (this.options.style && this.options.style.border) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-
-  data(data: Buffer) {
-    this.propagateEvent("data", data);
-  }
-
-  mount(program: Program, parent: ParentNode) {
-    this.program = program;
-    this.parent = parent;
-
-    program.fullScreen();
-
-    program.listenResize();
-
-    this.render(program, parent);
-  }
-
-  render(program: Program, parent: ParentNode) {
-    this.x = 0;
-    this.y = 0;
-
-    program.cursorTo(this.absX, this.absY);
-    program.output.clearScreenDown();
-
-    this.width = parent.contentWidth;
-    this.height = parent.contentHeight;
-
-    styling(this.options.style, this, program);
-  }
-
-  resize() {
-    if (this.program && this.parent) {
-      this.render(this.program, this.parent);
-
-      this.children.forEach(child => {
-        child.emit("resize");
-      });
-    }
-  }
-
-  destroy() {
-    if (this.program) {
-      this.program.write("\u001b[?1049l"); //rmcup
+    if (this.rendered) {
+      child._render();
     }
   }
 }
