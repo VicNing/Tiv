@@ -45,13 +45,18 @@ function calculateWidthOrHeight(property: string, value: number | string, parent
   }
 
   if (typeof value === 'number') {
+    if(value < 0){
+      throw new Error('Value should not less than 0.');
+    }
     return value;
-  } else {
+  } else if (typeof value === 'string' && isPercentage(value)) {
     if (!parent) {
       return 0;
     } else {
       return parent[property] * parsePersentage(value);
     }
+  } else {
+    throw new Error('Value should be a valid number or percentage string');
   }
 }
 
@@ -91,7 +96,7 @@ function calculateLeftOrTop(property: string, value: number | string, element: E
   throw new Error(`Could not calculate left or top because of invalid combination of arguments.`);
 }
 
-export default abstract class Element {
+export abstract class Element {
   parent?: Element
   _options?: ElementOptions
 

@@ -1,5 +1,5 @@
-import Element, { ElementOptions } from './element'
-import {layoutAndRender} from './renderer'
+import { Element, ElementOptions } from './element'
+import { layoutAndRender } from './renderer'
 
 export interface TextOptions extends ElementOptions {
   text?: string

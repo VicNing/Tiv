@@ -25,7 +25,7 @@ test(`"100%" can be parsed by parsePercentage`, () => {
 });
 
 test(`"3.1%" can be parsed by parsePercentage`, () => {
-  expect(parsePersentage('3.1%')).toBe(3.1 / 100);
+  expect(parsePersentage('3.1%')).toBeCloseTo(0.031);
 });
 
 test(`"3.1" can not be parsed by parsePercentage`, () => {

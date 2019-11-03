@@ -21,15 +21,21 @@ function calculateWidthOrHeight(property, value, parent) {
         throw new Error(`Function "calculateWidthOrHeight" must have either 'width' or 'height' as it's property argument.`);
     }
     if (typeof value === 'number') {
+        if (value < 0) {
+            throw new Error('Value should not less than 0.');
+        }
         return value;
     }
-    else {
+    else if (typeof value === 'string' && utils_1.isPercentage(value)) {
         if (!parent) {
             return 0;
         }
         else {
             return parent[property] * utils_1.parsePersentage(value);
         }
+    }
+    else {
+        throw new Error('Value should be a valid number or percentage string');
     }
 }
 function calculateLeftOrTop(property, value, element) {
@@ -91,4 +97,4 @@ class Element {
         return calculateLeftOrTop('top', this._options.top, this);
     }
 }
-exports.default = Element;
+exports.Element = Element;

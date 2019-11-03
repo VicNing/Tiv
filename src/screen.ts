@@ -1,5 +1,5 @@
 import terminal from './terminal'
-import Element from './element'
+import {Element} from './element'
 import { KEYS } from './keys'
 
 export class Screen {

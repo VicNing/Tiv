@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const renderer_1 = require("./renderer");
 const element_1 = require("./element");
-class Container extends element_1.default {
+class Container extends element_1.Element {
     constructor(options) {
         super(options);
         this.children = [];

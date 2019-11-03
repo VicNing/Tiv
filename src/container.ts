@@ -1,5 +1,5 @@
 import { layoutAndRender } from './renderer'
-import Element, { ElementOptions } from './element'
+import {Element, ElementOptions } from './element'
 
 export class Container extends Element {
   children: Array<Element> = []
