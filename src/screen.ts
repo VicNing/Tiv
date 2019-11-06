@@ -1,8 +1,8 @@
 import terminal from './terminal'
-import {Element} from './element'
+import { Element } from './element'
 import { KEYS } from './keys'
 
-export class Screen {
+export class Screen extends Element {
   _keyHandlers: { [index: number]: Array<() => void> } = {};
   rendered: boolean = false
   children: Array<Element> = []
@@ -24,6 +24,7 @@ export class Screen {
   }
 
   constructor(options: Object) {
+    super();
     this.bindKey(KEYS.ctrl_c, () => {
       process.exit();
     });

@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const terminal_1 = require("./terminal");
+const element_1 = require("./element");
 const keys_1 = require("./keys");
-class Screen {
+class Screen extends element_1.Element {
     constructor(options) {
+        super();
         this._keyHandlers = {};
         this.rendered = false;
         this.children = [];

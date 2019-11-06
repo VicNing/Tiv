@@ -1,4 +1,7 @@
 import { isPercentage, parsePersentage } from './utils'
+import { Terminal } from './terminal'
+import { LayoutObject } from './renderer';
+import { Screen } from './screen'
 
 export interface ElementOptions {
   width: number | string, //absolute value or percentage
@@ -45,15 +48,15 @@ function calculateWidthOrHeight(property: string, value: number | string, parent
   }
 
   if (typeof value === 'number') {
-    if(value < 0){
+    if (value < 0) {
       throw new Error('Value should not less than 0.');
     }
-    return value;
+    return Math.round(value);
   } else if (typeof value === 'string' && isPercentage(value)) {
     if (!parent) {
       return 0;
     } else {
-      return parent[property] * parsePersentage(value);
+      return Math.round(parent[property] * parsePersentage(value));
     }
   } else {
     throw new Error('Value should be a valid number or percentage string');
@@ -66,7 +69,11 @@ function calculateLeftOrTop(property: string, value: number | string, element: E
   }
 
   if (typeof value === 'number') {
-    return value;
+    if (value < 0) {
+      throw new Error('Value should not less than 0.');
+    }
+
+    return Math.round(value);
   } else {
     if (!element.parent) {
       return 0;
@@ -74,21 +81,21 @@ function calculateLeftOrTop(property: string, value: number | string, element: E
 
     if (isPercentage(value)) {
       if (property === 'left') {
-        return element.parent.width * parsePersentage(value);
+        return Math.round(element.parent.width * parsePersentage(value));
       }
 
       if (property === 'top') {
-        return element.parent.height * parsePersentage(value);
+        return Math.round(element.parent.height * parsePersentage(value));
       }
     }
 
     if (value === 'center') {
       if (property === 'left') {
-        return element.parent.width / 2 + element.width / 2;
+        return Math.round(element.parent.width / 2 + element.width / 2);
       }
 
       if (property === 'top') {
-        return element.parent.height / 2 + element.height / 2;
+        return Math.round(element.parent.height / 2 + element.height / 2);
       }
     }
   }
@@ -97,11 +104,15 @@ function calculateLeftOrTop(property: string, value: number | string, element: E
 }
 
 export abstract class Element {
+  ['constructor']!: typeof Element
   parent?: Element
   _options?: ElementOptions
+  static renderer?: (terminal: Terminal, layout: LayoutObject) => void
 
-  constructor(options: ElementOptions) {
-    validateElementOptions(options);
+  constructor(options?: ElementOptions) {
+    if (options) {
+      validateElementOptions(options);
+    }
   }
 
   get width(): number {

@@ -43,4 +43,5 @@ class Terminal extends events_1.EventEmitter {
         }
     }
 }
+exports.Terminal = Terminal;
 exports.default = new Terminal();

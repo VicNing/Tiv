@@ -43,8 +43,10 @@ function paint(layout) {
 }
 function layoutAndRender(element) {
     const layout = calculateLayout(element);
-    const style = calculateStyle(element);
-    //const customPainters = element.constructor.customPainters;
-    //paint(layout, style, element, customPainters);
+    paint(layout);
+    const customRenderer = element.constructor.renderer;
+    if (customRenderer) {
+        customRenderer(terminal_1.default, layout);
+    }
 }
 exports.layoutAndRender = layoutAndRender;

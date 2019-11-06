@@ -4,7 +4,7 @@ import { EventEmitter } from 'events';
 const stdin = process.stdin as tty.ReadStream;
 const stdout = process.stdout as tty.WriteStream;
 
-class Terminal extends EventEmitter {
+export class Terminal extends EventEmitter {
   initialize() {
     if (!stdin || !stdout || !stdin.isTTY) {
       throw new Error('Not in a tty environment.');

@@ -1,7 +1,7 @@
-import {Element} from './element'
+import { Element } from './element'
 import terminal from './terminal'
 
-interface LayoutObject {
+export interface LayoutObject {
   width: number,
   height: number,
   absTop: number,
@@ -70,8 +70,11 @@ function paint(layout: LayoutObject): void {
 
 export function layoutAndRender(element: Element) {
   const layout = calculateLayout(element);
-  const style = calculateStyle(element);
-  //const customPainters = element.constructor.customPainters;
+  paint(layout);
 
-  //paint(layout, style, element, customPainters);
+  const customRenderer = element.constructor.renderer;
+
+  if (customRenderer) {
+    customRenderer(terminal, layout);
+  }
 }

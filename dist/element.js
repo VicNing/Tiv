@@ -24,14 +24,14 @@ function calculateWidthOrHeight(property, value, parent) {
         if (value < 0) {
             throw new Error('Value should not less than 0.');
         }
-        return value;
+        return Math.round(value);
     }
     else if (typeof value === 'string' && utils_1.isPercentage(value)) {
         if (!parent) {
             return 0;
         }
         else {
-            return parent[property] * utils_1.parsePersentage(value);
+            return Math.round(parent[property] * utils_1.parsePersentage(value));
         }
     }
     else {
@@ -43,7 +43,10 @@ function calculateLeftOrTop(property, value, element) {
         throw new Error(`Function "calculateLeftOrTop" must have either 'left' or 'top' as it's property argument.`);
     }
     if (typeof value === 'number') {
-        return value;
+        if (value < 0) {
+            throw new Error('Value should not less than 0.');
+        }
+        return Math.round(value);
     }
     else {
         if (!element.parent) {
@@ -51,18 +54,18 @@ function calculateLeftOrTop(property, value, element) {
         }
         if (utils_1.isPercentage(value)) {
             if (property === 'left') {
-                return element.parent.width * utils_1.parsePersentage(value);
+                return Math.round(element.parent.width * utils_1.parsePersentage(value));
             }
             if (property === 'top') {
-                return element.parent.height * utils_1.parsePersentage(value);
+                return Math.round(element.parent.height * utils_1.parsePersentage(value));
             }
         }
         if (value === 'center') {
             if (property === 'left') {
-                return element.parent.width / 2 + element.width / 2;
+                return Math.round(element.parent.width / 2 + element.width / 2);
             }
             if (property === 'top') {
-                return element.parent.height / 2 + element.height / 2;
+                return Math.round(element.parent.height / 2 + element.height / 2);
             }
         }
     }
@@ -70,7 +73,9 @@ function calculateLeftOrTop(property, value, element) {
 }
 class Element {
     constructor(options) {
-        validateElementOptions(options);
+        if (options) {
+            validateElementOptions(options);
+        }
     }
     get width() {
         if (!this._options) {
