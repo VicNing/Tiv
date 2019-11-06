@@ -1,7 +1,6 @@
 import { isPercentage, parsePersentage } from './utils'
 import { Terminal } from './terminal'
 import { LayoutObject } from './renderer';
-import { Screen } from './screen'
 
 export interface ElementOptions {
   width: number | string, //absolute value or percentage
