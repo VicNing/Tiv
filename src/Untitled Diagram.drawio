@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-09T08:03:02.625Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="cG4Z5NLoK-AipJLo1TaJ" version="13.11.0" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-09T08:18:51.953Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="RrTC7moPYdO_jX0nsL9K" version="13.11.0" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1773" dy="591" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -243,11 +243,27 @@
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-63" value="videoTrack" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="-110" y="790" width="70" height="20" as="geometry" />
         </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-64">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="1590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-64" value="client.publish([track])" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="55" y="1200" width="130" height="20" as="geometry" />
         </mxCell>
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-66" value="client" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="-50" y="30" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-69" value="这里默认创建了HighStream高分辨率流，&lt;br&gt;根据参数_isDualStreamEnabled来判断是否需要创建LowStream&lt;br&gt;大小流相关" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontColor=#CC0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="130" y="1235" width="350" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#CC0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-70">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="1510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-70" value="&lt;font color=&quot;#000000&quot;&gt;this._publishHighStream()&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontColor=#CC0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="130" y="1310" width="150" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
