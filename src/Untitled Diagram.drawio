@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-09T08:18:51.953Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="RrTC7moPYdO_jX0nsL9K" version="13.11.0" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-09T08:41:54.724Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="7XXboYlHV82Uwn5L5G_i" version="13.11.0" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1773" dy="591" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -259,11 +259,49 @@
         </mxCell>
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#CC0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-70">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="370" y="1510" as="targetPoint" />
+            <mxPoint x="330" y="1400" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="330" y="1325" />
+            </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-70" value="&lt;font color=&quot;#000000&quot;&gt;this._publishHighStream()&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontColor=#CC0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="130" y="1310" width="150" height="30" as="geometry" />
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-70" value="&lt;font color=&quot;#000000&quot;&gt;this._publishHighStream()&lt;br&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontColor=#CC0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="130" y="1315" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-73" value="&lt;font&gt;this._highStream&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="200" y="1350" width="110" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-75" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-74">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="1440" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="530" y="1360" />
+              <mxPoint x="530" y="1440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-79" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontColor=#000000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-74" target="mV5sWuzgAVFhbm7Jw3Zg-73">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-74" value="new PubStreamConnection()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontColor=#000000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="335" y="1350" width="170" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#000000;dashed=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-76" target="mV5sWuzgAVFhbm7Jw3Zg-77">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-80" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontColor=#000000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-76">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="650" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-76" value="createPc()&lt;br&gt;aka&lt;br&gt;new PubRTCPeerConnection()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontColor=#000000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="560" y="1375" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-77" value="this.pc" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontColor=#000000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="465" y="1390" width="50" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-81" value="args: joinInfo.turnServer" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontColor=#000000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="570" y="1169" width="140" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
