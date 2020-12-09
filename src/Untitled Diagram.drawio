@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-09T07:19:16.968Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="94jQO0H-2PslqNN99YIZ" version="13.11.0" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-09T07:40:02.365Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="w6xz5zEe2Simlif0CiTk" version="13.11.0" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1773" dy="591" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -96,7 +96,7 @@
         </mxCell>
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-23">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="280" y="530" as="targetPoint" />
+            <mxPoint x="280" y="660" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-23" value="this._gateway.join()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
@@ -105,7 +105,7 @@
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-24" value="joinInfo" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="25" y="350" width="50" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.825;entryY=-0.15;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-25" target="mV5sWuzgAVFhbm7Jw3Zg-23">
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.825;entryY=-0.15;entryDx=0;entryDy=0;entryPerimeter=0;dashed=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-25" target="mV5sWuzgAVFhbm7Jw3Zg-23">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="219" y="390" />
@@ -126,12 +126,14 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-32" target="mV5sWuzgAVFhbm7Jw3Zg-36">
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.008;entryY=0.62;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-32" target="mV5sWuzgAVFhbm7Jw3Zg-36">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="400" y="570" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="430" y="480" />
-              <mxPoint x="430" y="570" />
+              <mxPoint x="570" y="480" />
+              <mxPoint x="570" y="570" />
+              <mxPoint x="470" y="570" />
+              <mxPoint x="470" y="571" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -139,7 +141,7 @@
           <mxGeometry x="290" y="470" width="100" height="20" as="geometry" />
         </mxCell>
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-35" value="ws.init()" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="430" y="510" width="60" height="20" as="geometry" />
+          <mxGeometry x="590" y="510" width="60" height="20" as="geometry" />
         </mxCell>
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mV5sWuzgAVFhbm7Jw3Zg-36">
           <mxGeometry relative="1" as="geometry">
@@ -149,17 +151,20 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-36" value="this.signal.join()&lt;br&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="290" y="555" width="100" height="20" as="geometry" />
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-36" value="this.signal.join()&lt;br&gt;&lt;font color=&quot;#ff8000&quot;&gt;params comes from&amp;nbsp;&lt;br&gt;this.gatway.signal.on(REQUEST_JOIN_INFO&lt;/font&gt;)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="210" y="535" width="260" height="50" as="geometry" />
         </mxCell>
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-37" value="EVENT:Webscoket.Connected" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="410" y="575" width="180" height="20" as="geometry" />
+          <mxGeometry x="490" y="575" width="180" height="20" as="geometry" />
         </mxCell>
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-40" value="ws.sendMessage({type:JOIN})" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="350" y="620" width="180" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-41" value="EVENT:Websocket.Message payload Request ID" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-41" value="EVENT:Websocket.Message payload Request ID" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="350" y="650" width="280" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-43" value="client.createCameraVideoTrack()&lt;br&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="20" y="770" width="190" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
