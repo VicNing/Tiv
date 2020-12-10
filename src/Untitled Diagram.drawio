@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-12-10T09:15:45.291Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="TIdLwOSVuofuyigkkds4" version="13.11.0" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-10T15:10:31.666Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="-RM7F7neS1vRHM8z5BC1" version="13.11.0" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2178" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3192" dy="1478" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -653,6 +653,15 @@
         </mxCell>
         <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-175" value="最终获取remoteVideoTack, remoteAudioTrack" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontColor=#CC0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="715" y="3390" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-176" value="&lt;font color=&quot;#000000&quot;&gt;SDK API&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-690" y="60" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-177" value="browser WebRTC API" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontColor=#33FF33;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-725" y="110" width="130" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mV5sWuzgAVFhbm7Jw3Zg-179" value="事件" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-680" y="150" width="40" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
